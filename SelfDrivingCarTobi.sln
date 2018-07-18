@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2017
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfDrivingCarTobi.Plugins", "SelfDrivingCarTobi.Plugins.csproj", "{ACBA018A-3443-03D2-3099-F5BFD9C5D01C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfDrivingCarTobi", "SelfDrivingCarTobi.csproj", "{EBCDEAC8-EE3D-9FD6-2FA7-65B2812B3FB0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SelfDrivingCarTobi.Editor.Plugins", "SelfDrivingCarTobi.Editor.Plugins.csproj", "{5EA8B96A-2FBA-C3D6-0833-4D5996C6D168}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACBA018A-3443-03D2-3099-F5BFD9C5D01C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACBA018A-3443-03D2-3099-F5BFD9C5D01C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACBA018A-3443-03D2-3099-F5BFD9C5D01C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACBA018A-3443-03D2-3099-F5BFD9C5D01C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBCDEAC8-EE3D-9FD6-2FA7-65B2812B3FB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBCDEAC8-EE3D-9FD6-2FA7-65B2812B3FB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBCDEAC8-EE3D-9FD6-2FA7-65B2812B3FB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBCDEAC8-EE3D-9FD6-2FA7-65B2812B3FB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EA8B96A-2FBA-C3D6-0833-4D5996C6D168}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EA8B96A-2FBA-C3D6-0833-4D5996C6D168}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EA8B96A-2FBA-C3D6-0833-4D5996C6D168}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EA8B96A-2FBA-C3D6-0833-4D5996C6D168}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
