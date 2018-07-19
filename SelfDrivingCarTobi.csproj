@@ -294,6 +294,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CarControll.cs" />
     <Compile Include="Assets\Scripts\FollowCar.cs" />
   </ItemGroup>
   <ItemGroup>
