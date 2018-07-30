@@ -1,8 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CarControll : MonoBehaviour {
+
+    //Level Manager-- Restarting, Swtiching to AI Mode, Etc.
+    public LevelManager levelManager;
+
+    //GUI variables
+    public Text successInfoText;
 
     //Car physics variables
     public float maxMotorTorque;
@@ -85,7 +92,7 @@ public class CarControll : MonoBehaviour {
             //Turning DATA
             if (moveSideWards == 1)
             {
-                Debug.Log("Sidewards-Debug: Right: " + isTurningRight.ToString());
+               // Debug.Log("Sidewards-Debug: Right: " + isTurningRight.ToString());
                 isTurningRight = 1f;
                 isNotTurning = 0f;
                 isTurningLeft = 0f;
@@ -98,7 +105,7 @@ public class CarControll : MonoBehaviour {
             }
             else if (moveSideWards == -1)
             {
-                Debug.Log("Sidewards-Debug: Left:  " + isTurningLeft.ToString());
+               // Debug.Log("Sidewards-Debug: Left:  " + isTurningLeft.ToString());
 
                 isTurningRight = 0f;
                 isNotTurning = 0f;
@@ -147,7 +154,7 @@ public class CarControll : MonoBehaviour {
             {
                 if (axleInfo.steering)
                 {
-                    Debug.Log("Sidewards-Debug: Steering:" + steering);
+                    //Debug.Log("Sidewards-Debug: Steering:" + steering);
                     axleInfo.leftWheel.steerAngle = steering;
                     axleInfo.rightWheel.steerAngle = steering;
                 }
@@ -204,6 +211,51 @@ public class CarControll : MonoBehaviour {
             audioSource.Play();
         }
     }
+    
+    public void OnCollisionStay(Collision collision)
+    {
+        if(collision.gameObject.tag == "Finish" && !isControlledByAI)
+        {
+            //sendDataToServer()
+            successInfoText.text = "Succesfull trained, Data is sent to Server";
+            StartCoroutine(WaitTimeAndShowMenu(3.0f));
+            //Debug.Log("Debug OnCollisionStay: " + "Should be called only once");
+        }
+
+        else if (collision.gameObject.tag == "Finish" && isControlledByAI)
+        {
+            successInfoText.text = "Succesfull Autonomous Car, Well Done!";
+            StartCoroutine(WaitTimeAndShowMenu(3.0f));
+            //Debug.Log("Debug OnCollisionStay: " + "Should be called only once");
+        }
+
+
+    }
+
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Wall" && !isControlledByAI)
+        {
+            successInfoText.text = "Failed, restart Training!";
+            StartCoroutine(WaitTimeAndShowMenu(3.0f));
+
+        }
+        else if (collision.gameObject.tag == "Finish" && isControlledByAI)
+        {
+            successInfoText.text = "Failed, go Back To Menu!";
+            StartCoroutine(WaitTimeAndShowMenu(3.0f));
+
+        }
+
+    }
+
+    IEnumerator WaitTimeAndShowMenu(float time)
+    {
+        yield return new WaitForSeconds(time);
+        levelManager.showMenu();
+
+    }
+
 
 }
 

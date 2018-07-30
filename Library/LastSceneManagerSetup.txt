@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/GameControllable.unity
+- path: Assets/Scenes/GameControllable.unity
   isLoaded: 1
   isActive: 1

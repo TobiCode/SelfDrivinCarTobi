@@ -296,6 +296,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\CarControll.cs" />
     <Compile Include="Assets\Scripts\FollowCar.cs" />
+    <Compile Include="Assets\Scripts\GameManagerScript.cs" />
+    <Compile Include="Assets\Scripts\LevelManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\CrossPlatformInput\CrossPlatformInputGuidelines.txt" />
