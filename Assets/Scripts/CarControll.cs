@@ -7,6 +7,9 @@ public class CarControll : MonoBehaviour {
 
     //Level Manager-- Restarting, Swtiching to AI Mode, Etc.
     public LevelManager levelManager;
+    private SensorData sensors;
+    private DataTransfer dataTransfer;
+
 
     //GUI variables
     public Text successInfoText;
@@ -27,6 +30,7 @@ public class CarControll : MonoBehaviour {
 
     //Game State Variables
     public static bool isFinished;
+    private bool alreadyAccelerated;
 
     //isControlledByAI
     public static bool isControlledByAI;
@@ -56,12 +60,15 @@ public class CarControll : MonoBehaviour {
         rb.centerOfMass = centerOfMass;
         audioSource = GetComponent<AudioSource>();
 
+        sensors = this.GetComponent<SensorData>();
+
         startingSettingsGame();
     }
 
     //After Crash or maybe at the restart
     public void startingSettingsGame()
     {
+        alreadyAccelerated = false;
         isFinished = false;
         //ResetCarPosition
         transform.position = initialPosition;
@@ -82,6 +89,11 @@ public class CarControll : MonoBehaviour {
             //Accelerating/Braking DATA
             if (moveForward == 1)
             {
+                if (!alreadyAccelerated)
+                {
+                    OnFirstAccelerate();
+                    alreadyAccelerated = true;
+                }
                 isAccelerating = 1f;
             }
             else if (moveForward <= 0)
@@ -189,7 +201,7 @@ public class CarControll : MonoBehaviour {
         {
             return NewMax;
         }
-        Debug.Log("New Value (mappedSpeed): " + NewValue);
+        //Debug.Log("New Value (mappedSpeed): " + NewValue);
         return NewValue;
     }
 
@@ -256,6 +268,15 @@ public class CarControll : MonoBehaviour {
 
     }
 
+
+    //Build Data for Training
+    private void OnFirstAccelerate()
+    {
+        if (!CarControll.isControlledByAI)
+        {
+           StartCoroutine(sensors.addInformationList());
+        }
+    }
 
 }
 
