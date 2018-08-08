@@ -35,6 +35,8 @@ public class CarControll : MonoBehaviour {
     //isControlledByAI
     public static bool isControlledByAI;
 
+    public bool dataSentOnce;
+
     private bool crashed;
 
     //Initia position-Starting position
@@ -54,6 +56,7 @@ public class CarControll : MonoBehaviour {
 
     public void Awake()
     {
+        dataSentOnce = false;
         initialPosition = transform.position;
         initialRotation = transform.rotation;
         rb = GetComponent<Rigidbody>();
@@ -61,6 +64,7 @@ public class CarControll : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
 
         sensors = this.GetComponent<SensorData>();
+        dataTransfer = this.GetComponent<DataTransfer>();
 
         startingSettingsGame();
     }
@@ -226,11 +230,19 @@ public class CarControll : MonoBehaviour {
     
     public void OnCollisionStay(Collision collision)
     {
+        
         if(collision.gameObject.tag == "Finish" && !isControlledByAI)
         {
-            //sendDataToServer()
-            successInfoText.text = "Succesfull trained, Data is sent to Server";
-            StartCoroutine(WaitTimeAndShowMenu(3.0f));
+            if (!dataSentOnce)
+            {
+                dataTransfer.SendDataToServer();
+                dataSentOnce = true;
+            }
+            else
+            {
+                successInfoText.text = "Succesfull trained, Data is sent to Server";
+                StartCoroutine(WaitTimeAndShowMenu(3.0f));
+            }
             //Debug.Log("Debug OnCollisionStay: " + "Should be called only once");
         }
 
