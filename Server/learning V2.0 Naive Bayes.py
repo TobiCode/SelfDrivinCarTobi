@@ -24,6 +24,7 @@ TRAINING_DATA_FILE = "training_data.csv"
 
 class LearningManagerNB:
     def __init__(self):
+        print "----------Build models, train them and test them....---------"
         if os.path.exists(DATA_DUMP_DIRECTORY):
             print "Data_dump folder exists"
             os.chdir(DATA_DUMP_DIRECTORY)
@@ -95,12 +96,13 @@ class LearningManagerNB:
                         test_Y_isKeepingStraight.append(isKeepingStraight)
                         test_Y_isAcelerating.append(isAccelerating)
                         test_counter +=1 
+                    
                     #Create Model 
                     #print test_x
-                    model_isTurning_Left = GaussianNB()
-                    model_isTurning_Right = GaussianNB()
-                    model_isKeepingSTraight = GaussianNB()
-                    model_isAccelerating = GaussianNB()
+                    self.model_isTurning_Left = GaussianNB()
+                    self.model_isTurning_Right = GaussianNB()
+                    self.model_isKeepingSTraight = GaussianNB()
+                    self.model_isAccelerating = GaussianNB()
 
                     #Np-arrays needed for training
                     train_x_np = np.array(train_x).astype(np.float)
@@ -110,20 +112,20 @@ class LearningManagerNB:
                     train_Y_isAcelerating_np = np.array(train_Y_isAcelerating).astype(np.float)
                     
                     #Train the model
-                    model_isTurning_Left.fit(train_x_np, train_Y_isTurning_Left_np)
-                    model_isTurning_Right.fit(train_x_np, train_Y_isTurning_Right_np)
-                    model_isKeepingSTraight.fit(train_x_np, train_Y_isKeepingStraight_np)
-                    model_isAccelerating.fit(train_x_np, train_Y_isAcelerating_np)
+                    self.model_isTurning_Left.fit(train_x_np, train_Y_isTurning_Left_np)
+                    self.model_isTurning_Right.fit(train_x_np, train_Y_isTurning_Right_np)
+                    self.model_isKeepingSTraight.fit(train_x_np, train_Y_isKeepingStraight_np)
+                    self.model_isAccelerating.fit(train_x_np, train_Y_isAcelerating_np)
                     
                     #predict                   
-                    predicted_isTurning_Left = model_isTurning_Left.predict(train_x_np)
-                    predicted_isTurning_Right = model_isTurning_Right.predict(train_x_np)
-                    predicted_isKeepingStraight = model_isKeepingSTraight.predict(train_x_np)
-                    predicted_isAccelerating = model_isAccelerating.predict(train_x_np)
+                    predicted_isTurning_Left = self.model_isTurning_Left.predict(train_x_np)
+                    predicted_isTurning_Right = self.model_isTurning_Right.predict(train_x_np)
+                    predicted_isKeepingStraight = self.model_isKeepingSTraight.predict(train_x_np)
+                    predicted_isAccelerating = self.model_isAccelerating.predict(train_x_np)
                     #print predicted_isKeepingStraight
                     
                     #Test the model
-                    print "Test Score"
+                    print "-----Test Score-----"
                     #http://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html
                     
                     score_isTurning_Left = accuracy_score(train_Y_isTurning_Left_np, 
@@ -138,22 +140,27 @@ class LearningManagerNB:
                     print "Score of isTurningRight-Prediction: ", score_isTurningRight
                     print "Score of isKeepingSTraight-Prediction: ", score_isKeepingStraight
                     print "Score of isAccelerating-Prediction: ", score_isAccelerating
-                    
-                    #print(predicted)
-                    
-                    #test the model
-                    #score = score(train_x, predicted)
-                    #print score
 
 
         else:
             print "File does not exist-> Tell Unity that the user has to train first"
             
         os.chdir("..")
-                
-#1.Data loading and preperation
-
+    
+    def predict(self, data):
+        data_as_np = np.array(data).astype(np.float)
+        
+        predicted_isTurning_Left = self.model_isTurning_Left.predict(data_as_np)
+        predicted_isTurning_Right = self.model_isTurning_Right.predict(data_as_np)
+        predicted_isKeepingStraight = self.model_isKeepingSTraight.predict(data_as_np)
+        predicted_isAccelerating = self.model_isAccelerating.predict(data_as_np)  
+        
+        return [predicted_isTurning_Left[0], predicted_isTurning_Right[0], predicted_isKeepingStraight[0],
+                predicted_isAccelerating[0]]
 
 if __name__ == '__main__':
     learningManager = LearningManagerNB()
+    print "------------------"
+    testPredict = learningManager.predict([['26.33905', '0.5196293', '3.332337']])
+    print testPredict
            

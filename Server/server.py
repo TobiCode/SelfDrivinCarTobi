@@ -47,6 +47,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             #Output of model needs to be: isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating
             print("Data is input for Model and command for car needs to be sent back")
             
+            
         else:
             print "You accessed: ", path
         self.send_response(200)
