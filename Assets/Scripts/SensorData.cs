@@ -223,7 +223,21 @@ public class SensorData : MonoBehaviour
         public float isTurningRight;
         public float isNotTurning;
     }
-    
+
+
+    //AI-Methods
+    //Server sending server data to 3d environment
+    public string GetDistanceToObject()
+    {
+        _serializedObject = new JSONObject(JSONObject.Type.OBJECT);
+        JSONObject trainingCase = new JSONObject(JSONObject.Type.OBJECT);
+        trainingCase.AddField("scaledSpeed", CarControll.currentSpeed);
+        trainingCase.AddField("scaledForward", forwardDistance);
+        trainingCase.AddField("scaledLeftRightRatio", leftRightRatio);
+        _serializedObject.AddField("data", trainingCase);
+        return _serializedObject.Print();
+    }
+
 
 
 }

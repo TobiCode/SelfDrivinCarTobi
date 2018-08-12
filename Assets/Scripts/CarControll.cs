@@ -35,7 +35,7 @@ public class CarControll : MonoBehaviour {
     //isControlledByAI
     public static bool isControlledByAI;
 
-    public bool dataSentOnce;
+    private bool dataSentOnce;
 
     private bool crashed;
 
@@ -67,6 +67,15 @@ public class CarControll : MonoBehaviour {
         dataTransfer = this.GetComponent<DataTransfer>();
 
         startingSettingsGame();
+
+
+        //Ai Mode:
+        if (isControlledByAI)
+        {
+            //Change to IEnumerator
+            StartCoroutine(dataTransfer.GetDataFromServer());
+
+        }
     }
 
     //After Crash or maybe at the restart
@@ -83,7 +92,7 @@ public class CarControll : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!isFinished)
+        if (!isFinished && !isControlledByAI)
         {   
             //Hold the speed of the car: Without not able to steer 
             currentSpeed = rb.velocity.magnitude * 3.6f;
@@ -127,8 +136,10 @@ public class CarControll : MonoBehaviour {
                 isNotTurning = 0f;
                 isTurningLeft = 1f;
             }
-            playSound();
         }
+
+        playSound();
+
     }
 
     public void FixedUpdate()

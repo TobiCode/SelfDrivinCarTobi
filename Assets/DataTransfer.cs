@@ -46,4 +46,78 @@ public class DataTransfer : MonoBehaviour {
         //StartCoroutine (WaitForRequest (www));  
     }
 
+    //AI-Methods
+    //Sent by MoveCar
+    public IEnumerator GetDataFromServer()
+    {
+        Debug.Log("GetDataFromServerMethod called!!!");
+        //If AI is controlling, then we want it to send wall input data
+        //&& !CarControll.isFinished
+        while (CarControll.isControlledByAI )
+        {
+            yield return new WaitForSeconds(dataDelay);
+            //Debug.Log("Sending distance from wall");
+            string url = "http://localhost:80/getDrivingData";
+            //First send distance from wall data
+            Dictionary<string, string> postHeaders = new Dictionary<string, string>();
+            postHeaders.Add("Content-Type", "application/json");
+            byte[] bytes = Encoding.UTF8.GetBytes(sensorData.GetDistanceToObject());
+            WWW www = new WWW(url, bytes, postHeaders);
+            //Receive data
+            StartCoroutine(WaitForRequest(www));
+        }
+    }
+
+
+    IEnumerator WaitForRequest(WWW www)
+    {
+        Debug.Log("WaitForRequest called!!!");
+
+        //If www is null, return
+        yield return www;
+        //Debug.Log ("we are receiving requests");
+        if (www.error == null)
+        {
+            Debug.Log("WaitForRequest and no error!!!");
+            string receivedText = www.text;
+            Debug.Log("Received Command from Server: " +  receivedText);
+            JSONObject serializedList = new JSONObject(receivedText);
+            //accessData(serializedList);
+
+        }
+    }
+
+    /*
+    void accessData(JSONObject obj)
+    {
+        for (int i = 0; i < obj.list.Count; i++)
+        {
+            string key = (string)obj.keys[i];
+            float number = obj.list[i].n;
+            switch (key)
+            {
+                case "shouldAccelerate":
+                    //If we are moving straight and we are in front of the wall, override and break
+                    if (sensorData.scaledForward < 0.2f && number == 1 && MoveCar.shouldNotTurn == 1 && MoveCar.mySpeed > 30f)
+                    {
+                        number = 0;
+                    }
+                    MoveCar.shouldAccelerate = number;
+                    break;
+                case "shouldTurnLeft":
+                    MoveCar.shouldTurnLeft = number;
+                    break;
+                case "shouldTurnRight":
+                    MoveCar.shouldTurnRight = number;
+                    break;
+                case "shouldKeepStraight":
+                    MoveCar.shouldNotTurn = number;
+                    break;
+            }
+        }
+    }
+    */
+
+
+
 }
