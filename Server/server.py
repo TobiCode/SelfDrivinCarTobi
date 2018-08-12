@@ -6,7 +6,7 @@ Server for AI Car Project
 import time
 import BaseHTTPServer
 import json
-import learning
+import persisting
 
 
 HOST_NAME = 'localhost' # !!!REMEMBER TO CHANGE THIS!!!
@@ -40,10 +40,13 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         print ("Received: " + body_raw)
         if path == SEND_DRIVING_DATA_ROUTE:
             print "Data needs to be saved in training csv"
-            persistanceManager = learning.PersistanceManager()
+            persistanceManager = persisting.PersistanceManager()
             persistanceManager.getDataAndSave(body_raw)
         elif path == GET_DRIVING_DATA_ROUTE:
+            #Data which needs to be sent is: scaledSpeed, scaledForward, scaledLeftRightRatio
+            #Output of model needs to be: isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating
             print("Data is input for Model and command for car needs to be sent back")
+            
         else:
             print "You accessed: ", path
         self.send_response(200)
