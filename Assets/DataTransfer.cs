@@ -17,7 +17,6 @@ public class DataTransfer : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        dataDelay = 0.2f;
 	}
 	
 	// Update is called once per frame
@@ -78,10 +77,18 @@ public class DataTransfer : MonoBehaviour {
         //Debug.Log ("we are receiving requests");
         if (www.error == null)
         {
-            Debug.Log("WaitForRequest and no error!!!");
+            Debug.Log("WaitForRequest and no error:");
             string receivedText = www.text;
             Debug.Log("Received Command from Server: " +  receivedText);
-            JSONObject serializedList = new JSONObject(receivedText);
+            JSONObject jsonReceived = new JSONObject(receivedText);
+            Dictionary<string, string> dict =  jsonReceived.ToDictionary();
+            CarControll.isTurningLeft = float.Parse(dict["isTurningLeft"]);
+            CarControll.isTurningRight = float.Parse(dict["isTurningRight"]);
+            CarControll.isNotTurning = float.Parse(dict["isKeepingStraight"]);
+            CarControll.isAccelerating = float.Parse(dict["isAccelerating"]);
+            Debug.Log("Commands arrived at Car: " + jsonReceived.ToString());
+
+
             //accessData(serializedList);
 
         }

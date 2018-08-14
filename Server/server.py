@@ -19,8 +19,8 @@ GET_DRIVING_DATA_ROUTE = '/getDrivingData'
 
 
 class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
-    def __init__(self):
-        self.learningManager = learningV2NaiveBayes.LearningManagerNB()
+    
+    learningManager = learningV2NaiveBayes.LearningManagerNB()
     
     def do_HEAD(s):
         s.send_response(200)
@@ -49,18 +49,22 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         elif path == GET_DRIVING_DATA_ROUTE:
             #Data which needs to be sent is: scaledSpeed, scaledForward, scaledLeftRightRatio
             #Output of model needs to be: isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating
-            print("-------Data is input for Model and command for car needs to be sent back------")
+            print("Data is input for Model and command for car needs to be sent back------")
             data_dict = json.loads(body_raw)
-            print data_dict["data"]["scaledForward"]
-            print data_dict["data"]["scaledSpeed"]
-            print data_dict["data"]["scaledLeftRightRatio"]
-            
-            
-            
-            #self.send_response(200)
-            #self.send_header("Content-Type", "text/plain")
-           # self.end_headers()
-            #self.wfile.write("Received JSON")
+            scaledForward = data_dict["data"]["scaledForward"]
+            scaledSpeed = data_dict["data"]["scaledSpeed"]
+            scaledLeftRightRatio = data_dict["data"]["scaledLeftRightRatio"]
+            predict_input = [[scaledForward, scaledLeftRightRatio,scaledSpeed]]
+            result =  MyHandler.learningManager.predict(predict_input)
+            print("Predicted: " + str(result))
+            print("--------------------------------------------------")
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.end_headers()
+            send_back = {'isTurningLeft': result[0], 'isTurningRight': result[1], 
+                         'isKeepingStraight': result[2], 'isAccelerating': result[3]}
+            send_back = json.dumps(send_back)
+            self.wfile.write(send_back)
 
         else:
             print "You accessed: ", path
