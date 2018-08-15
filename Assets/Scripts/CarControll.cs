@@ -275,9 +275,9 @@ public class CarControll : MonoBehaviour {
             StartCoroutine(WaitTimeAndShowMenu(3.0f));
 
         }
-        else if (collision.gameObject.tag == "Finish" && isControlledByAI)
+        else if (collision.gameObject.tag == "Wall" && isControlledByAI)
         {
-            successInfoText.text = "Failed, go Back To Menu!";
+            successInfoText.text = "Failed, go Back To Menu! You need to train more!";
             StartCoroutine(WaitTimeAndShowMenu(3.0f));
 
         }

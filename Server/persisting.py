@@ -63,6 +63,8 @@ class PersistanceManager:
                                  t["isTurningLeft"], t["isTurningRight"],
                                  t["isKeepingStraight"], t["isAccelerating"])) 
         os.chdir("..")
+        
+        
 
     
 if __name__ == '__main__':

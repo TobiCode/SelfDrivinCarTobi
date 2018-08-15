@@ -46,6 +46,7 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
             print "Data needs to be saved in training csv"
             persistanceManager = persisting.PersistanceManager()
             persistanceManager.getDataAndSave(body_raw)
+            MyHandler.learningManager = learningV2NaiveBayes.LearningManagerNB()
         elif path == GET_DRIVING_DATA_ROUTE:
             #Data which needs to be sent is: scaledSpeed, scaledForward, scaledLeftRightRatio
             #Output of model needs to be: isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating

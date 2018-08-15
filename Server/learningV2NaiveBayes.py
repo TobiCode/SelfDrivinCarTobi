@@ -51,7 +51,7 @@ class LearningManagerNB:
                     train_Y_isTurning_Right = []
                     train_Y_isKeepingStraight = []
                     train_Y_isAcelerating = []
-                    
+                    #Create train_x and train_Y's
                     while train_counter< length_train:
                         #train_x
                         scaled_forward = whole_data[train_counter][0]
@@ -98,7 +98,6 @@ class LearningManagerNB:
                         test_counter +=1 
                     
                     #Create Model 
-                    #print test_x
                     self.model_isTurning_Left = GaussianNB()
                     self.model_isTurning_Right = GaussianNB()
                     self.model_isKeepingSTraight = GaussianNB()
@@ -117,12 +116,12 @@ class LearningManagerNB:
                     self.model_isKeepingSTraight.fit(train_x_np, train_Y_isKeepingStraight_np)
                     self.model_isAccelerating.fit(train_x_np, train_Y_isAcelerating_np)
                     
-                    #predict                   
+                    #predict for train sets, in order to compare them with the train_Y data                   
                     predicted_isTurning_Left = self.model_isTurning_Left.predict(train_x_np)
                     predicted_isTurning_Right = self.model_isTurning_Right.predict(train_x_np)
                     predicted_isKeepingStraight = self.model_isKeepingSTraight.predict(train_x_np)
                     predicted_isAccelerating = self.model_isAccelerating.predict(train_x_np)
-                    #print predicted_isKeepingStraight
+                    
                     
                     #Test the model
                     print "-----Test Score-----"
@@ -140,6 +139,9 @@ class LearningManagerNB:
                     print "Score of isTurningRight-Prediction: ", score_isTurningRight
                     print "Score of isKeepingSTraight-Prediction: ", score_isKeepingStraight
                     print "Score of isAccelerating-Prediction: ", score_isAccelerating
+                    
+            else:
+                print "File does not exist -> Tell Unity that the user has to train first"
 
 
         else:
