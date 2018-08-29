@@ -100,7 +100,7 @@ public class SensorData : MonoBehaviour
         if (Physics.Raycast(sensorLocation.position, fwd, out hit, Mathf.Infinity))
         {
             if (hit.transform.tag == "Wall")
-                Debug.DrawRay(sensorLocation.position, sensorLocation.TransformDirection(Vector3.forward) * hit.distance, Color.blue);
+                Debug.DrawRay(sensorLocation.position, sensorLocation.TransformDirection(Vector3.forward) * hit.distance, Color.red);
             //Debug.Log("Did Hit Forwar: " + hit.distance);
 
             //Set Sensor GUI to the hitpoint

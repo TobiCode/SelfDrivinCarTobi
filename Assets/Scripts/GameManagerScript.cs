@@ -9,12 +9,12 @@ public class GameManagerScript : MonoBehaviour {
     public  void testTheCar()
     {
         CarControll.isControlledByAI = true;
-        Application.LoadLevel("GameControllable");
+        Application.LoadLevel("EasyParkour");
     }
 
     public  void trainTheCar()
     {
         CarControll.isControlledByAI = false;
-        Application.LoadLevel("GameControllable");
+        Application.LoadLevel("EasyParkour");
     }
 }

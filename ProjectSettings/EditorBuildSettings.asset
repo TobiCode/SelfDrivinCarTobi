@@ -11,3 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameControllable.unity
     guid: fbdea69571ba4054698458dcef0f26a3
+  - enabled: 1
+    path: Assets/Scenes/EasyParkour.unity
+    guid: 84e22b80ffc05434499f716157bcd617
