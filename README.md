@@ -62,7 +62,7 @@ The Car Game OBject contains 4 Scripts:
   </li>
   <li> The LevelManager Script in the CarControllScript Block is just the reference to the GameObject "GameManager" and called, when you fail or reach thedestination. (levelManager.showMenu())
   </li>
-    <li> The SensorData Script: Uses the Sensor in the front of the car ("Radar"- measures distances to objects maybe half a meter over the ground). After the start of the Game this script enables the "Radar" with the checkDistancesMethod(float time). <br></li>
+    <li> The SensorData Script: Uses the Sensor in the front of the car ("Radar"- measures distances to objects maybe half a meter over the ground). After the start of the Game this script enables the "Radar" with the checkDistancesMethod(float time). <br>
      ```
   
        while (!CarControll.isFinished)
@@ -77,10 +77,17 @@ The Car Game OBject contains 4 Scripts:
         }
      
      ``` 
-  It will also create a InformationList (addInformationList()), that collects the data in a list and serializes the data and makes a JSON Object out of it, to send it to the server later.
-
+  It will also create a InformationList (addInformationList()), that collects the data in a list and serializes the data and makes a JSON Object out of it, to send it to the server later. <br>
+  In addition to that this script also shows the radar measure points and the distance on the GUI with the methods OnGUi() and 
+  with this line of code in every checkDistanceMethod, the RadarMeasurePoint:
+         
+         //Set Sensor GUI to the hitpoint
+           leftwardRayHitPoint.transform.position = cam.WorldToScreenPoint(hit.point);
+  </li>
+  <li> The DataTransfer Script: 
   
   
+  </li>
 
 
 
