@@ -45,19 +45,42 @@ The GameCntrollable Scene is the actual Game with the Parcour and the predefined
 
 First of all 2 Pictures of it, so you see, how this scene actually looks like:<br>
 <ul> 
-  <li> This is the View of the GameControllable Scene in Unity 
-    <img src="GitHubRes/GameControllable_Unity_View.PNG" height="200px" title="GameCOntrollable in Editor View"> <br>
+  <li> This is the View of the GameControllable Scene in Unity, you can see all GameObjects, and the Properties of the Car
+    <img src="GitHubRes/GameControllable_Unity_View.PNG" height="200px" title="GameControllable in Editor View">
   </li>
   <li> This is the View of the GameControllable Scene actually if you play it
-    <img src="GitHubRes/GameControllable_GameView.PNG" height="200px" title="GameCOntrollable in Editor View"> <br>
+    <img src="GitHubRes/GameControllable_GameView.PNG" height="200px" title="GameControllable in Game View"> <br>
   </li>
  </ul>
  
- In the first picture you can already see the important Game OBjects on the left side and what scripts are used by the Car GameObject.
+ In the first picture you can already see the important Game Objects on the left side and what scripts are used by the Car GameObject.
  <br>
  
-    
+The Car Game OBject contains 4 Scripts:
+<ul>
+  <li> The CarControll Script: enables the moovement of the car, interacts with the other scripts aswell and somehow defines the lifecycle and doings of the car (autonomousMode, CollisionHandling, Init InformationHandling, ...)
+  </li>
+  <li> The LevelManager Script in the CarControllScript Block is just the reference to the GameObject "GameManager" and called, when you fail or reach thedestination. (levelManager.showMenu())
+  </li>
+    <li> The SensorData Script: Uses the Sensor in the front of the car ("Radar"- measures distances to objects maybe half a meter over the ground). After the start of the Game this script enables the "Radar" with the checkDistancesMethod(float time). <br></li>
+     ```
+  
+       while (!CarControll.isFinished)
+        {
+            yield return new WaitForSeconds(time);
+            //Debug.Log("Time: " + Time.time);
+            forwardDistance = CheckForwardSensorDistance();
+            leftDistance = CheckLeftwardSensorDistance();
+            rightDistance = CheckRightWardSensorDistance();
+            leftRightRatio = calculateLeftRightRatio(leftDistance, rightDistance);
+            //Debug.Log("LR-Ratio: " + leftRightRatio);
+        }
+     
+     ``` 
+  It will also create a InformationList (addInformationList()), that collects the data in a list and serializes the data and makes a JSON Object out of it, to send it to the server later.
 
+  
+  
 
 
 
@@ -65,8 +88,7 @@ First of all 2 Pictures of it, so you see, how this scene actually looks like:<b
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details 
 
 
 
