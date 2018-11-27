@@ -29,6 +29,21 @@ If I am finished with the project I will create a requirements.txt file, which i
 TODO: Add pictures here and maybe a video how the car is driving autonomously and how it works.
 
 
+## Code Explanation
+
+
+
+## Theory Explanation
+### Unity Project
+The Unity Project has 3 Scenes. I will describe the 2 important ones. <br>
+The <b>MainMenu Scene</b> has 2 Buttons, which start the Game either in Training or Autonomous Mode.
+<img src="GitHubRes/MainMenu.PNG" height="200px" title="Main Menu with 2 Buttons"><br>
+Therefore they use the functions of the GameManager Object with the GameManagerScript.cs and set the 2 methods of the GameManagerScript as the onClick Methods.<br>
+
+The GameCOntrollable Scene is the actual Game with the Parcour and the predefined end of the track. Just try to reach the pizza store without crashing against a wall. <br>
+
+
+
 
   
 
