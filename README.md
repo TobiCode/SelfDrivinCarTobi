@@ -9,7 +9,7 @@ I will Implement a lot of other supervised learning methods and may if I have ti
 ## Getting Started
 Just Clone the repository start the server with Python 3, after you downloaded the needed libraries.
 If I am finished with the project I will create a requirements.txt file, which inlcudes all the modules for the project to make the installation easier with pip. <br>
-<b> Introduction will follow </b>
+<b> Introduction will follow </b> <br>
 <br>
 <b>How you use the application:</b> <br>
 1.   First of all run the server.py script in the Server Directory 
@@ -33,14 +33,30 @@ TODO: Add pictures here and maybe a video how the car is driving autonomously an
 
 
 
-## Theory Explanation
+## Theory Explanation <br>
+
 ### Unity Project
 The Unity Project has 3 Scenes. I will describe the 2 important ones. <br>
 The <b>MainMenu Scene</b> has 2 Buttons, which start the Game either in Training or Autonomous Mode.
 <img src="GitHubRes/MainMenu.PNG" height="200px" title="Main Menu with 2 Buttons"><br>
 Therefore they use the functions of the GameManager Object with the GameManagerScript.cs and set the 2 methods of the GameManagerScript as the onClick Methods.<br>
 
-The GameCOntrollable Scene is the actual Game with the Parcour and the predefined end of the track. Just try to reach the pizza store without crashing against a wall. <br>
+The GameCntrollable Scene is the actual Game with the Parcour and the predefined end of the track. Just try to reach the pizza store without crashing against a wall. <br>
+
+First of all 2 Pictures of it, so you see, how this scene actually looks like:<br>
+<ul> 
+  <li> This is the View of the GameControllable Scene in Unity 
+    <img src="GitHubRes/GameControllable_Unity_View.PNG" height="200px" title="GameCOntrollable in Editor View"> <br>
+  </li>
+  <li> This is the View of the GameControllable Scene actually if you play it
+    <img src="GitHubRes/GameControllable_GameView.PNG" height="200px" title="GameCOntrollable in Editor View"> <br>
+  </li>
+ </ul>
+ 
+ In the first picture you can already see the important Game OBjects on the left side and what scripts are used by the Car GameObject.
+ <br>
+ 
+    
 
 
 
