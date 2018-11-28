@@ -13,7 +13,7 @@ import learningV2NaiveBayes
 HOST_NAME = 'localhost' # !!!REMEMBER TO CHANGE THIS!!!
 PORT_NUMBER = 80 # Maybe set this to 9000.
 
-# API Routes
+# API Routes - on the view of the car
 SEND_DRIVING_DATA_ROUTE = '/sendDrivingData'
 GET_DRIVING_DATA_ROUTE = '/getDrivingData'
 
@@ -35,6 +35,8 @@ class MyHandler(BaseHTTPServer.BaseHTTPRequestHandler):
         s.wfile.write("<body><h1> Welcome to the server </h1>")
         s.wfile.write("<p>Here the machine learning happens</p>")
         s.wfile.write("</body></html>")
+
+
     #The car sends data via POST -> either full data to give training sets or just the environment
     #data to retrieve the commands
     def do_POST(self):
