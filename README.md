@@ -29,11 +29,8 @@ If I am finished with the project I will create a requirements.txt file, which i
 TODO: Add pictures here and maybe a video how the car is driving autonomously and how it works.
 
 
-## Code Explanation
 
-
-
-## Theory Explanation <br>
+## Theory & Code Explanation <br>
 
 ### Unity Project
 The Unity Project has 3 Scenes. I will describe the 2 important ones. <br>
@@ -79,7 +76,7 @@ The Car Game Object contains 4 Scripts:
      ``` 
   It will also create a InformationList (addInformationList()), that collects the data in a list and serializes the data and makes a JSON Object out of it, to send it to the server later. <br>
   In addition to that this script also shows the radar measure points and the distance on the GUI with the methods OnGUi() and 
-  with this line of code in every checkDistanceMethod, the RadarMeasurePoint:
+  with this line of code in every checkDistanceMethod, the RadarMeasurePoint is visualized with a GUI Point:
          
          //Set Sensor GUI to the hitpoint
            leftwardRayHitPoint.transform.position = cam.WorldToScreenPoint(hit.point);
@@ -88,7 +85,7 @@ The Car Game Object contains 4 Scripts:
   1. SendDataToServer(): calls the serialzeList() metod from the SensorData Script and sends this JSON listto the Rest Server running on localhost:80. This is only used in the Training Mode, because you send the list with all collected Data. <br>
   2. GetDataFromServer():Called in Autonomous Mode after Level start. Sends a Rest POST to the server with the current scaledSpeed, scaledForward, scaledLeftRightRatio and starts the WaitForRequest() Coroutine, which waits for the response with the commands for the car. <br>
   3. WaitForRequest(): receives the response from getDataCall to the Server and sends the "commands" to the car as following:
-             
+ 
             CarControll.isTurningLeft = float.Parse(dict["isTurningLeft"]);
             CarControll.isTurningRight = float.Parse(dict["isTurningRight"]);
             CarControll.isNotTurning = float.Parse(dict["isKeepingStraight"]);
@@ -96,10 +93,25 @@ The Car Game Object contains 4 Scripts:
   </li>
   </ul>
   
+  <br>
+  This was the improtant stuff to know about the Unity Project. 
   
   
   
-
+  ### Server Project
+  The Server currently runs with Python 2.7 for Naive Bayes, but on the next ML - Method,  I will change it to Python 3.6. <br>
+  On the bottom in this file, I will always try to keep it up to date for which ML method you need which Python version. <br>
+  
+  ######The structure of the Server
+  
+  <ul>
+  <li> Server.py: This is the file, which you need to execute in order to start the server. It will immediately create a LearningManager, which creates the ML-Model with the training-data with the file training_data.csv in the folder data_dump. If you like to change the training data, just replace this file with your training data. <br>
+    The Server.py also defines the API routes. <br>
+    <b>The SEND_DRIVING_DATA_ROUTE </b>, accepts data and saves it with the help of the PersistanceManager of the persisting.py module. After the retrieval of new data, it will recreate/retrain the ML-model. <br>
+    <b> The GET_DRIVING_DATA_ROUTE </b> retrieves the actual driving infos of the car and sends back the commands to drive.
+  </li>
+  <li> Persisting.py: PersistanceManager, for saving the training data. </li>
+  <li> Learning.py (Differs according to the ML-Method): Creates a ML-Model and trains it with the data, in order to predict the commands for the car. </li>
 
   
 
