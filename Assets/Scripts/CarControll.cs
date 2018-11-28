@@ -73,7 +73,7 @@ public class CarControll : MonoBehaviour {
         if (isControlledByAI)
         {
             //Change to IEnumerator
-            StartCoroutine(dataTransfer.GetDataFromServer());
+            StartCoroutine(dataTransfer.GetDataFromServerRequest());
 
         }
     }
