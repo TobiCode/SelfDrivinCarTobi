@@ -56,7 +56,7 @@ First of all 2 Pictures of it, so you see, how this scene actually looks like:<b
  In the first picture you can already see the important Game Objects on the left side and what scripts are used by the Car GameObject.
  <br>
  
-The Car Game OBject contains 4 Scripts:
+The Car Game Object contains 4 Scripts:
 <ul>
   <li> The CarControll Script: enables the moovement of the car, interacts with the other scripts aswell and somehow defines the lifecycle and doings of the car (autonomousMode, CollisionHandling, Init InformationHandling, ...)
   </li>
@@ -84,11 +84,21 @@ The Car Game OBject contains 4 Scripts:
          //Set Sensor GUI to the hitpoint
            leftwardRayHitPoint.transform.position = cam.WorldToScreenPoint(hit.point);
   </li>
-  <li> The DataTransfer Script: 
-  
-  
+  <li> The DataTransfer Script: has 3 "main" methods: <br> 
+  1. SendDataToServer(): calls the serialzeList() metod from the SensorData Script and sends this JSON listto the Rest Server running on localhost:80. This is only used in the Training Mode, because you send the list with all collected Data. <br>
+  2. GetDataFromServer():Called in Autonomous Mode after Level start. Sends a Rest POST to the server with the current scaledSpeed, scaledForward, scaledLeftRightRatio and starts the WaitForRequest() Coroutine, which waits for the response with the commands for the car. <br>
+  3. WaitForRequest(): receives the response from getDataCall to the Server and sends the "commands" to the car as following:
+             
+            CarControll.isTurningLeft = float.Parse(dict["isTurningLeft"]);
+            CarControll.isTurningRight = float.Parse(dict["isTurningRight"]);
+            CarControll.isNotTurning = float.Parse(dict["isKeepingStraight"]);
+            CarControll.isAccelerating = float.Parse(dict["isAccelerating"]);
   </li>
-
+  </ul>
+  
+  
+  
+  
 
 
   
