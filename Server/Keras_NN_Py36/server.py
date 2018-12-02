@@ -20,8 +20,9 @@ GET_DRIVING_DATA_ROUTE = '/getDrivingData'
 
 class Request_Handler(BaseHTTPRequestHandler):
     
-    def __init__(self): 
+    def __init__(self, *args, **kwargs): 
         self.learningManager = learningNN.LearningManager()
+        super().__init__(*args, **kwargs)
     
     
     def do_HEAD(s):
@@ -33,29 +34,34 @@ class Request_Handler(BaseHTTPRequestHandler):
         s.send_response(200)
         s.send_header("Content-type", "text/html")
         s.end_headers()
-        s.wfile.write("<html><head><title>Autonomous Magic</title></head>")
-        s.wfile.write("<body><h1> Welcome to the server </h1>")
-        s.wfile.write("<p>Here the machine learning happens</p>")
-        s.wfile.write("</body></html>")
+        send_back = "<html><head><title>Autonomous Magic</title></head>"
+        send_back += "<body><h1> Welcome to the server </h1>"
+        send_back += "<p>Here the machine learning happens</p>"
+        send_back += "</body></html>"
+        s.wfile.write(bytes(send_back, "UTF-8"))
 
 
     #The car sends data via POST -> either full data to give training sets or just the environment
     #data to retrieve the commands
     def do_POST(self):
-        body = json.loads(self.rfile.read(int(self.headers.getheader('Content-Length', 0))))
+        content_length = int(self.headers['Content-Length']) # <--- Gets the size of data
+        body = self.rfile.read(content_length) # <--- Gets the data itself
+        #body = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
         path = self.path
-        body_raw = json.dumps(body)
-        print ("Received: " + body_raw)
+        print("DEBUG BODY:" + str(body))
+        #body_raw = json.dumps(body.decode("utf-8")) 
+        body_raw = json.loads(body.decode("utf-8")) 
+        print ("Received: " + str(body_raw))
         if path == SEND_DRIVING_DATA_ROUTE:
             print ("Data needs to be saved in training csv")
             persistanceManager = persisting.PersistanceManager()
             persistanceManager.getDataAndSave(body_raw)
-            self.learningManager = learningNN.LearningManager()
+            #self.learningManager = learningNN.LearningManager()
         elif path == GET_DRIVING_DATA_ROUTE:
             #Data which needs to be sent is: scaledSpeed, scaledForward, scaledLeftRightRatio
             #Output of model needs to be: isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating
             print("Data is input for Model and command for car needs to be sent back------")
-            data_dict = json.loads(body_raw)
+            data_dict = body_raw
             scaledForward = data_dict["data"]["scaledForward"]
             scaledSpeed = data_dict["data"]["scaledSpeed"]
             scaledLeftRightRatio = data_dict["data"]["scaledLeftRightRatio"]

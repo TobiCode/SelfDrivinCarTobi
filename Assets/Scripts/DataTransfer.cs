@@ -41,7 +41,13 @@ public class DataTransfer : MonoBehaviour {
         byte[] bytes = Encoding.UTF8.GetBytes(sensorData.SerializeList());
         WWW www = new WWW(url, bytes, postHeaders);
         // Debug.Log("We sent data correctly...");
-        Debug.Log("Response from Server:  " + www.responseHeaders.ToString());
+        List<string> keyList = new List<string>(www.responseHeaders.Keys);
+        List<string> valueList = new List<string>(www.responseHeaders.Values);
+
+        Debug.Log("Respnse from Server:");
+        debugListValues(keyList);
+        debugListValues(valueList);
+
         //StartCoroutine (WaitForRequest (www));  
     }
 
@@ -124,6 +130,17 @@ public class DataTransfer : MonoBehaviour {
         }
     }
     */
+
+    public void debugListValues(List<string> list)
+    {
+        string temp = "";
+        foreach (string str in list)
+        {
+            temp += str + ","; //maybe also + '\n' to put them on their own line.
+        }
+
+        Debug.Log("List: " + temp);
+    }
 
 
 

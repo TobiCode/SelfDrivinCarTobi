@@ -15,7 +15,7 @@ import json
 DATA_DUMP_DIRECTORY = 'data_dump'
 TRAINING_DATA_FILE = "training_data.csv"
 example_json = '{"data":[{"scaledForward":23.93192,"scaledLeftRightRatio":0.5572439,"isAccelerating":1,"scaledSpeed":15.03786,"isTurningLeft":0,"isTurningRight":0,"isKeepingStraight":1},{"scaledForward":18.0533,"scaledLeftRightRatio":0.6257154,"isAccelerating":1,"scaledSpeed":26.89997,"isTurningLeft":0,"isTurningRight":1,"isKeepingStraight":0},{"scaledForward":20.39035,"scaledLeftRightRatio":0.6053656,"isAccelerating":1,"scaledSpeed":35.61538,"isTurningLeft":0,"isTurningRight":0,"isKeepingStraight":1}],"types":["motion","steering"]}'
-
+example_dict = {"data":[{"scaledForward":23.93192,"scaledLeftRightRatio":0.5572439,"isAccelerating":1,"scaledSpeed":15.03786,"isTurningLeft":0,"isTurningRight":0,"isKeepingStraight":1},{"scaledForward":18.0533,"scaledLeftRightRatio":0.6257154,"isAccelerating":1,"scaledSpeed":26.89997,"isTurningLeft":0,"isTurningRight":1,"isKeepingStraight":0},{"scaledForward":20.39035,"scaledLeftRightRatio":0.6053656,"isAccelerating":1,"scaledSpeed":35.61538,"isTurningLeft":0,"isTurningRight":0,"isKeepingStraight":1}],"types":["motion","steering"]}
 
 class PersistanceManager:
     def __init__(self):
@@ -45,7 +45,8 @@ class PersistanceManager:
             
    
     def getDataAndSave(self, data):
-        data_dict = json.loads(data)
+        data_dict = data
+        #data_dict = json.loads(data)
         print  (data_dict["data"][0]["scaledForward"])
         print  (data_dict["data"][0]["scaledLeftRightRatio"])
         print  (data_dict["data"][0]["isAccelerating"])
@@ -55,13 +56,11 @@ class PersistanceManager:
         print  (data_dict["data"][0]["isKeepingStraight"])
         
         os.chdir(DATA_DUMP_DIRECTORY)
-        with open('training_data.csv', 'ab') as csvfile:
+        with open('training_data.csv', 'a',newline='\n') as csvfile:
             writer = csv.writer(csvfile)
             for t in data_dict["data"]:
-                writer.writerow((t["scaledForward"], t["scaledLeftRightRatio"], 
-                                  t["scaledSpeed"], 
-                                 t["isTurningLeft"], t["isTurningRight"],
-                                 t["isKeepingStraight"], t["isAccelerating"])) 
+                writer.writerow((t["scaledForward"], t["scaledLeftRightRatio"], t["scaledSpeed"],
+                                 t["isTurningLeft"], t["isTurningRight"], t["isKeepingStraight"],t["isAccelerating"])) 
         os.chdir("..")
         
         
@@ -69,6 +68,4 @@ class PersistanceManager:
     
 if __name__ == '__main__':
     persistanceManager = PersistanceManager()
-    persistanceManager.getDataAndSave(example_json)
-           
-            
+    persistanceManager.getDataAndSave(example_dict)

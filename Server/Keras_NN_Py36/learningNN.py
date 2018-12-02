@@ -31,7 +31,7 @@ DATA_DUMP_DIRECTORY = 'data_dump'
 TRAINING_DATA_FILE = "training_data.csv"
 NORMALIZE = True
 
-class LearningManagerNB:
+class LearningManager:
     
     def __init__(self):
         print ("----------Build models, train them and test them....---------")
@@ -88,12 +88,10 @@ class LearningManagerNB:
                     print("Elements of Y look like:" + str(Y[0]))
                     
                     X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = train_test_split(X,Y, test_size=0.33, random_state=2, shuffle=False)
-                    print("Typ von X_TRAIN:" + str(type(X_TRAIN)))
                     X_TRAIN = np.asarray(X_TRAIN)
                     X_TEST = np.asarray(X_TEST)
                     Y_TRAIN = np.asarray(Y_TRAIN)
                     Y_TEST = np.asarray(Y_TEST)
-                    print("Shape of X_TRAIN after conversion:" + str(X_TRAIN.shape))
                     print("Anzahl an Trainingsdaten:" + str(len(X_TRAIN)))
                     print("Anzahl an Testdaten:" + str(len(X_TEST)))
                     #End create training testing datasets
@@ -138,8 +136,8 @@ def minValueListList(index, llist):
     return min(sublist[index] for sublist in llist)
 
 if __name__ == '__main__':
-    learningManager = LearningManagerNB()
+    learningManager = LearningManager()
     print ("------------------")
     testPredict = learningManager.predict([['26.33905', '0.5196293', '3.332337']])
-    print (testPredict)
+    print ("Predicted round: " + str(testPredict))
            
