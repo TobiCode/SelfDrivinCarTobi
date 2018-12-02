@@ -1843,7 +1843,7 @@ MonoBehaviour:
   leftwardRayHitPoint: {fileID: 0}
   forwardRayHitPoint: {fileID: 0}
   rightwardRayHitPoint: {fileID: 0}
-  rayAngle: 30
+  rayAngle: 50
   cam: {fileID: 1069024453}
 --- !u!114 &788553052
 MonoBehaviour:
@@ -1856,7 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d0724b64873a84dbf01a3e7f8950c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dataDelay: 0.2
+  dataDelay: 1
 --- !u!54 &788553054
 Rigidbody:
   m_ObjectHideFlags: 0

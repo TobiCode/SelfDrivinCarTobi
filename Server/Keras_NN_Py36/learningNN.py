@@ -87,7 +87,7 @@ class LearningManager:
                     print("Elements of X look like:" + str(X[0]))
                     print("Elements of Y look like:" + str(Y[0]))
                     
-                    X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = train_test_split(X,Y, test_size=0.33, random_state=2, shuffle=False)
+                    X_TRAIN, X_TEST, Y_TRAIN, Y_TEST = train_test_split(X,Y, test_size=0.3, random_state=2, shuffle=False)
                     X_TRAIN = np.asarray(X_TRAIN)
                     X_TEST = np.asarray(X_TEST)
                     Y_TRAIN = np.asarray(Y_TRAIN)
@@ -138,6 +138,10 @@ def minValueListList(index, llist):
 if __name__ == '__main__':
     learningManager = LearningManager()
     print ("------------------")
-    testPredict = learningManager.predict([['26.33905', '0.5196293', '3.332337']])
+    print ("Input Array: scaledForward, scaledLeftRightRatio, scaledSpeed")
+    testArray = [0.22880003720806005, 0.0, 0.11407798294863335]
+    print ("Input Array: " + str(testArray))
+    print("Prediction:[isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating]")
+    testPredict = learningManager.predict([testArray])
     print ("Predicted round: " + str(testPredict))
            

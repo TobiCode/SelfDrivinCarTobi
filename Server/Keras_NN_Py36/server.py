@@ -8,6 +8,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import persisting
 import learningNN
+import numpy as np
 
 
 HOST_NAME = 'localhost' # !!!REMEMBER TO CHANGE THIS!!!
@@ -20,8 +21,9 @@ GET_DRIVING_DATA_ROUTE = '/getDrivingData'
 
 class Request_Handler(BaseHTTPRequestHandler):
     
+    learningManager = learningNN.LearningManager()
+
     def __init__(self, *args, **kwargs): 
-        self.learningManager = learningNN.LearningManager()
         super().__init__(*args, **kwargs)
     
     
@@ -56,7 +58,7 @@ class Request_Handler(BaseHTTPRequestHandler):
             print ("Data needs to be saved in training csv")
             persistanceManager = persisting.PersistanceManager()
             persistanceManager.getDataAndSave(body_raw)
-            #self.learningManager = learningNN.LearningManager()
+            Request_Handler.learningManager = learningNN.LearningManager()
         elif path == GET_DRIVING_DATA_ROUTE:
             #Data which needs to be sent is: scaledSpeed, scaledForward, scaledLeftRightRatio
             #Output of model needs to be: isTurningLeft, isTurningRight, isKeepingStraight, isAccelerating
@@ -66,7 +68,7 @@ class Request_Handler(BaseHTTPRequestHandler):
             scaledSpeed = data_dict["data"]["scaledSpeed"]
             scaledLeftRightRatio = data_dict["data"]["scaledLeftRightRatio"]
             predict_input = [[scaledForward, scaledLeftRightRatio,scaledSpeed]]
-            result =  self.learningManager.predict(predict_input)
+            result =  Request_Handler.learningManager.predict(predict_input)
             print("Predicted: " + str(result))
             print("--------------------------------------------------")
             self.send_response(200)
@@ -86,6 +88,7 @@ class Request_Handler(BaseHTTPRequestHandler):
 
         
 if __name__ == '__main__':
+    np.random.seed(1337) # for reproducibility
     server_adress= (HOST_NAME, PORT_NUMBER)
     httpd = HTTPServer(server_adress, Request_Handler)
     
