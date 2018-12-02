@@ -105,7 +105,7 @@ class LearningManager:
 
                     
                     #Train the model
-                    self.model.fit(X_TRAIN, Y_TRAIN, epochs=6, validation_data=(X_TEST,Y_TEST), verbose =2)
+                    self.model.fit(X_TRAIN, Y_TRAIN, epochs=1, validation_data=(X_TEST,Y_TEST), verbose =2)
                     
                     
                     #Evaluate the model
@@ -126,9 +126,9 @@ class LearningManager:
         
         predicted = self.model.predict(data_as_np)
         print ("Predicted not round:" + str(predicted))
-        predicted = np.around(predicted[0])
+        predicted = np.around(predicted[0]).astype(int).tolist()
         
-        return [predicted]
+        return predicted
         
 def maxValueListList(index, llist):
     return max(sublist[index] for sublist in llist)

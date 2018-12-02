@@ -75,14 +75,14 @@ class Request_Handler(BaseHTTPRequestHandler):
             send_back = {'isTurningLeft': result[0], 'isTurningRight': result[1], 
                          'isKeepingStraight': result[2], 'isAccelerating': result[3]}
             send_back = json.dumps(send_back)
-            self.wfile.write(send_back)
+            self.wfile.write(bytes(send_back, "UTF-8"))
 
         else:
             print ("You accessed: ", path)
             self.send_response(200)
             self.send_header("Content-Type", "text/plain")
             self.end_headers()
-            self.wfile.write("Succesfull json retrieved!!!!!!")
+            self.wfile.write(bytes("Succesfull json retrieved!!!!!!", "UTF-8"))
 
         
 if __name__ == '__main__':

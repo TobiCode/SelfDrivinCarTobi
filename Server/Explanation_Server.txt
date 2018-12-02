@@ -1,0 +1,9 @@
+The Server.py scripts describe a simple REST API for the self driving car in Unity.
+They have 2 POST paths 1) '/sendDrivingData' 2) '/getDrivingData'.
+The server will process the input and send back an answer.
+
+JSON needed for path '/getDrivingData':
+{"data": {"scaledSpeed": 0, "scaledForward": 27.30454, "scaledLeftRightRatio": 0.5168601}}
+
+JSON needed for path '/sendDrivingData':
+{"data": [{"scaledForward": 27.26738, "scaledLeftRightRatio": 0.5159005, "isAccelerating": 1, "scaledSpeed": 1.902171, "isTurningLeft": 0, "isTurningRight": 0, "isKeepingStraight": 1}, {"scaledForward": 27.14224, "scaledLeftRightRatio": 0.5136617, "isAccelerating": 1, "scaledSpeed": 3.618929, "isTurningLeft": 0, "isTurningRight": 0, "isKeepingStraight": 1}, {"scaledForward": 27.02557, "scaledLeftRightRatio": 0.510677, "isAccelerating": 1, "scaledSpeed": 5.447135, "isTurningLeft": 0, "isTurningRight": 0, "isKeepingStraight": 1}, {"scaledForward": 26.736, "scaledLeftRightRatio": 0.503438, "isAccelerating": 1, "scaledSpeed": 7.067194, "isTurningLeft": 0, "isTurningRight": 0, "isKeepingStraight": 1}, {"scaledForward": 26.34268, "scaledLeftRightRatio": 0.4936295, "isAccelerating": 1, "scaledSpeed": 8.806567, "isTurningLeft": 0, "isTurningRight": 0, "isKeepingStraight": 1}, {"scaledForward": 25.79889, "scaledLeftRightRatio": 0.4804894, "isAccelerating": 1, "scaledSpeed": 10.50864, "isTurningLeft": 0, "isTurningRight": 0, "isKeepingStraight": 1}], "types": ["motion", "steering"]}
